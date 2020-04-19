@@ -63,6 +63,7 @@ public class PrefixMatcherBenchmark {
   PathPrefixMatcher<String> plainMatcher;
   PathPrefixMatcher<String> sortedMatcher;
   PathPrefixMatcher<String> trieMatcher;
+  PathPrefixMatcher<String> prefixMapMatcher;
 
   @Setup
   public void setup() {
@@ -70,6 +71,7 @@ public class PrefixMatcherBenchmark {
     plainMatcher = new PlainPrefixMatcher<>(mapping);
     sortedMatcher = new SortedPrefixMatcher<>(mapping);
     trieMatcher = new TriePathMatcher<>(mapping);
+    prefixMapMatcher = new PrefixMapMatcher<>(mapping);
   }
 
   @Benchmark
@@ -115,6 +117,17 @@ public class PrefixMatcherBenchmark {
     int tot = 0;
     for (String key : KEYS) {
       tot += trieMatcher.match(key).length();
+    }
+    return tot;
+  }
+
+  @Benchmark
+  @BenchmarkMode(Mode.AverageTime)
+  @OutputTimeUnit(TimeUnit.NANOSECONDS)
+  public int prefixMap() {
+    int tot = 0;
+    for (String key : KEYS) {
+      tot += prefixMapMatcher.match(key).length();
     }
     return tot;
   }

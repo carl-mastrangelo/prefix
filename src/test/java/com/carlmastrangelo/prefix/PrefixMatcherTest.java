@@ -84,7 +84,8 @@ public class PrefixMatcherTest {
     return new Object[] {
       new PlainPrefixMatcher<>(mapping),
       new SortedPrefixMatcher<>(mapping),
-      new TriePathMatcher<>(mapping)
+      new TriePathMatcher<>(mapping),
+      new PrefixMapMatcher<>(mapping)
     };
   }
 
