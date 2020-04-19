@@ -1,14 +1,35 @@
+# Gradle
+build
+gradle.properties
 .gradle
-/build/
+local.properties
+out
 
-# Ignore Gradle GUI config
-gradle-app.setting
+# Maven (examples)
+target
 
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jar
+# Bazel
+bazel-bin
+bazel-examples
+bazel-genfiles
+bazel-perfmark
+bazel-out
+bazel-testlogs
 
-# Cache of project
-.gradletasknamecache
+# IntelliJ IDEA
+.idea
+*.iml
 
-# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
-# gradle/wrapper/gradle-wrapper.properties
+# Eclipse
+.classpath
+.project
+.settings
+.gitignore
+bin
+
+# OS X
+.DS_Store
+
+# Emacs
+*~
+\#*\#

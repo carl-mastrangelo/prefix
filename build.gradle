@@ -1,0 +1,64 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        maven { url "https://plugins.gradle.org/m2/" }
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.github.erizo.gradle:jcstress-gradle-plugin:0.8.3'
+        classpath 'net.ltgt.gradle:gradle-errorprone-plugin:1.1.0'
+        classpath "me.champeau.gradle:jmh-gradle-plugin:0.5.0"
+        classpath "gradle.plugin.com.github.sherter.google-java-format:google-java-format-gradle-plugin:0.8"
+    }
+}
+
+apply plugin: "java-library"
+apply plugin: "idea"
+apply plugin: "me.champeau.gradle.jmh"
+apply plugin: "com.github.sherter.google-java-format"
+
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
+
+group 'com.carlmastrangelo'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    testImplementation group: 'junit', name: 'junit', version: '4.13'
+}
+
+// ./gradlew --no-daemon clean :jmh
+jmh {
+    timeOnIteration = "1s"
+    warmup = "1s"
+    fork = 1
+    warmupIterations = 10
+
+    /*
+    profilers = ["perfasm"]
+
+    jvmArgs = [
+            "-XX:+UnlockDiagnosticVMOptions",
+            "-XX:+LogCompilation",
+            "-XX:LogFile=/tmp/blah.txt",
+            "-XX:+PrintAssembly",
+            "-XX:+PrintInterpreter",
+            "-XX:+PrintNMethods",
+            "-XX:+PrintNativeNMethods",
+            "-XX:+PrintSignatureHandlers",
+            "-XX:+PrintAdapterHandlers",
+            "-XX:+PrintStubCode",
+            "-XX:+PrintCompilation",
+            "-XX:+PrintInlining",
+            "-XX:+TraceClassLoading",
+            "-XX:PrintAssemblyOptions=syntax",
+            "-XX:PrintAssemblyOptions=intel"
+    ]
+    */
+}
