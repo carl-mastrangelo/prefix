@@ -44,7 +44,7 @@ Feel free to doubt and criticise these, there are almost certainly bugs.  To run
 # Linux
 sudo cpupower frequency-set -g performance
 
-# ./gradlew --no-daemon clean :jmh
+./gradlew --no-daemon clean :jmh
 ```
 
 ### Linear Scan
