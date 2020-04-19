@@ -79,9 +79,10 @@ Java makes it hard to do substring matching efficiently.  Much to the chagrin of
 O() runtime complexity wins rarely turn into speed ups. 
 
 
+### Future Exploration
 
-
-
+Substantial research has been done in prefix matching as it is commonly used in IP routers.  Several
+more advanced techniques are described in [Scalable High-Speed Prefix Matching](http://cseweb.ucsd.edu/~varghese/PAPERS/tocs01mw.pdf).
 
 
 
