@@ -38,8 +38,14 @@ PrefixMatcherBenchmark.sorted  avgt    5  134.283 ±  1.244  ns/op
 PrefixMatcherBenchmark.trie    avgt    5  186.083 ±  4.477  ns/op
 ```
 
-Feel free to doubt and criticise these, there are almost certainly bugs.
+Feel free to doubt and criticise these, there are almost certainly bugs.  To run these:
 
+```bash
+# Linux
+sudo cpupower frequency-set -g performance
+
+# ./gradlew --no-daemon clean :jmh
+```
 
 ### Linear Scan
 
