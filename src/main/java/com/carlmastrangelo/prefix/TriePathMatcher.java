@@ -51,7 +51,7 @@ final class TriePathMatcher<T> implements PathPrefixMatcher<T> {
         }
         String part = prefix.substring(from, to);
         from = to;
-        current = current.computeIfAbsent(part, k -> new TrieNode<>());
+        current = current.getOrDefault(part);
       } while (from < prefix.length());
       assert current.element == null;
       current.element = element;
@@ -78,9 +78,8 @@ final class TriePathMatcher<T> implements PathPrefixMatcher<T> {
       } else {
         to += 1;
       }
-      String part = path.substring(from, to);
+      TrieNode<T> child = current.get(path, from, to);
       from = to;
-      TrieNode<T> child = current.get(part);
       if (child == null) {
         return element;
       } else {
@@ -93,12 +92,51 @@ final class TriePathMatcher<T> implements PathPrefixMatcher<T> {
     return element;
   }
 
-  private static final class TrieNode<T> extends HashMap<String, TrieNode<T>> {
+  private static final class TrieNode<T> {
+
+    private static final int SIZE = 8;
+
+    private final String[] keys = new String[SIZE];
+
+    @SuppressWarnings("unchecked")
+    private final TrieNode<T>[] values = new TrieNode[SIZE];
+
     @Nullable T element;
 
-    @Override
-    public String toString() {
-      return "TrieNode{" + "element=" + element + ", children=" + entrySet() + '}';
+    TrieNode<T> getOrDefault(String part) {
+      int h = hash(part, 0, part.length()) & (SIZE - 1);
+      if (keys[h] != null) {
+        if (keys[h].equals(part)) {
+          return values[h];
+        } else {
+          throw new AssertionError("too small");
+        }
+      } else {
+        keys[h] = part;
+        values[h] = new TrieNode<>();
+        return values[h];
+      }
+    }
+
+    TrieNode<T> get(String key, int start, int stop) {
+      int h = hash(key, start, stop) & (SIZE - 1);
+      if (keys[h] != null) {
+        if (key.regionMatches(start, keys[h], 0, stop - start)) {
+          return values[h];
+        } else {
+          throw new AssertionError("too small");
+        }
+      } else {
+        return null;
+      }
+    }
+
+    private int hash(String key, int start, int stop) {
+      int h = 0;
+      for (int i = start; i < stop; i++) {
+        h = h * 31 + key.charAt(i);
+      }
+      return h;
     }
   }
 
